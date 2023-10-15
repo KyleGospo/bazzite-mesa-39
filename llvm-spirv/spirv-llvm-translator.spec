@@ -50,11 +50,12 @@ This package contains the standalone llvm to spirv tool.
        -DLLVM_BUILD_TOOLS=ON \
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DCMAKE_INSTALL_RPATH:BOOL=";" \
-       -DLLVM_DIR="/usr/lib64/cmake/llvm/" \
 %if 0%{?__isa_bits} == 64
        -DLLVM_LIBDIR_SUFFIX=64 \
+       -DLLVM_DIR="/usr/lib64/llvm16/lib/cmake/llvm" \
 %else
        -DLLVM_LIBDIR_SUFFIX= \
+       -DLLVM_DIR="/usr/lib/llvm16/lib/cmake/llvm" \
 %endif
        -DLLVM_EXTERNAL_PROJECTS="SPIRV-Headers" \
        -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR="/usr/include/spirv/"
