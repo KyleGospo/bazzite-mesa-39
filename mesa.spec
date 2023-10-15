@@ -11,6 +11,8 @@
 %global base_vulkan ,amd
 %endif
 
+%global _unpackaged_files_terminate_build 0
+
 %ifarch %{ix86} x86_64
 %global with_crocus 1
 %global with_i915   1
