@@ -486,7 +486,9 @@ popd
 
 %files dri-drivers
 %dir %{_datadir}/drirc.d
+%ifarch %{ix86} x86_64
 %{_datadir}/drirc.d/00-mesa-defaults.conf
+%endif
 %{_libdir}/dri/kms_swrast_dri.so
 %{_libdir}/dri/swrast_dri.so
 %{_libdir}/dri/virtio_gpu_dri.so
@@ -602,9 +604,9 @@ popd
 %{_datadir}/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
 %if 0%{?with_vulkan_hw}
 %{_libdir}/libvulkan_radeon.so
-%{_datadir}/drirc.d/00-radv-defaults.conf
 %{_datadir}/vulkan/icd.d/radeon_icd.*.json
 %ifarch %{ix86} x86_64
+%{_datadir}/drirc.d/00-radv-defaults.conf
 %{_libdir}/libvulkan_intel.so
 %{_datadir}/vulkan/icd.d/intel_icd.*.json
 %{_libdir}/libvulkan_intel_hasvk.so
