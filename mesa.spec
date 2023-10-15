@@ -146,7 +146,7 @@ BuildRequires:  bindgen
 BuildRequires:  rust-packaging
 BuildRequires:  pkgconfig(libclc)
 BuildRequires:  pkgconfig(SPIRV-Tools)
-BuildRequires:  pkgconfig(LLVMSPIRVLib)
+BuildRequires:  spirv-llvm16-translator
 %endif
 %if %{with valgrind}
 BuildRequires:  pkgconfig(valgrind)

@@ -2,7 +2,7 @@
 %global commit 8703d43bd14d000fc630c2d3918d918819d23741
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-Name:           spirv-llvm-translator
+Name:           spirv-llvm16-translator
 Version:        16.0.0
 Release:        3%{?dist}
 Summary:        LLVM to SPIRV Translator
