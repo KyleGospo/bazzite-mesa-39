@@ -6,7 +6,7 @@
 %if !0%{?rhel}
 %global with_nine 1
 %global with_omx 1
-%global with_opencl 1
+%global with_opencl 0
 %endif
 %global base_vulkan ,amd
 %endif
@@ -140,14 +140,8 @@ BuildRequires:  pkgconfig(libomxil-bellagio)
 BuildRequires:  pkgconfig(libelf)
 BuildRequires:  pkgconfig(libglvnd) >= 1.3.2
 BuildRequires:  llvm16-devel
-%if 0%{?with_opencl}
-BuildRequires:  clang-devel
-BuildRequires:  bindgen
-BuildRequires:  rust-packaging
 BuildRequires:  pkgconfig(libclc)
 BuildRequires:  pkgconfig(SPIRV-Tools)
-BuildRequires:  spirv-llvm16-translator
-%endif
 %if %{with valgrind}
 BuildRequires:  pkgconfig(valgrind)
 %endif
@@ -321,25 +315,6 @@ Requires:       (%{name}-dri-drivers%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{r
 %description libglapi
 %{summary}.
 
-%if 0%{?with_opencl}
-%package libOpenCL
-Summary:        Mesa OpenCL runtime library
-Requires:       ocl-icd%{?_isa}
-Requires:       libclc%{?_isa}
-Requires:       %{name}-libgbm%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       opencl-filesystem
-
-%description libOpenCL
-%{summary}.
-
-%package libOpenCL-devel
-Summary:        Mesa OpenCL development package
-Requires:       %{name}-libOpenCL%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-
-%description libOpenCL-devel
-%{summary}.
-%endif
-
 %if 0%{?with_nine}
 %package libd3d
 Summary:        Mesa Direct3D9 state tracker
@@ -390,10 +365,8 @@ export RUSTFLAGS="%build_rustflags"
   -Dgallium-va=%{?with_va:enabled}%{!?with_va:disabled} \
   -Dgallium-xa=%{?with_xa:enabled}%{!?with_xa:disabled} \
   -Dgallium-nine=%{?with_nine:true}%{!?with_nine:false} \
-  -Dgallium-opencl=%{?with_opencl:icd}%{!?with_opencl:disabled} \
-%if 0%{?with_opencl}
-  -Dgallium-rusticl=true \
-%endif
+  -Dgallium-opencl=disabled \
+  -Dgallium-rusticl=false \
   -Dvulkan-drivers=%{?vulkan_drivers} \
   -Dvulkan-layers=device-select \
   -Dshared-glapi=enabled \
@@ -508,17 +481,6 @@ popd
 %endif
 %endif
 
-%if 0%{?with_opencl}
-%files libOpenCL
-%{_libdir}/libMesaOpenCL.so.*
-%{_libdir}/libRusticlOpenCL.so.*
-%{_sysconfdir}/OpenCL/vendors/mesa.icd
-%{_sysconfdir}/OpenCL/vendors/rusticl.icd
-%files libOpenCL-devel
-%{_libdir}/libMesaOpenCL.so
-%{_libdir}/libRusticlOpenCL.so
-%endif
-
 %if 0%{?with_nine}
 %files libd3d
 %dir %{_libdir}/d3d/
@@ -590,10 +552,6 @@ popd
 %if 0%{?with_vmware}
 %{_libdir}/dri/vmwgfx_dri.so
 %endif
-%endif
-%if 0%{?with_opencl}
-%dir %{_libdir}/gallium-pipe
-%{_libdir}/gallium-pipe/*.so
 %endif
 %if 0%{?with_kmsro}
 %{_libdir}/dri/armada-drm_dri.so
