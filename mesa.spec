@@ -77,9 +77,10 @@ Source1:        Mesa-MLAA-License-Clarification-Email.txt
 # fixes a symbol name collision between iris and radeonsi drivers
 # expected to fix the crashes reported in #2238711
 Patch0:         0001-radeonsi-prefix-function-with-si_-to-prevent-name-co.patch
+  
+Patch10:        gnome-shell-glthread-disable.patch
 
-Patch1:         valve_config.patch
-Patch2:         gamescope.patch
+Patch20:        valve.patch
 
 BuildRequires:  meson >= 1.2.0
 BuildRequires:  gcc
